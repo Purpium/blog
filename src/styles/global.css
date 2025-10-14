@@ -42,7 +42,7 @@
   header {
     @apply fixed top-0 right-0 left-0 z-50 py-6;
     @apply bg-catppuccin-mantle/75;
-    @apply saturate-200 backdrop-blur-xs;
+    @apply backdrop-blur-xs;
   }
 
   footer {
