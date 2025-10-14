@@ -1,1 +1,51 @@
 @import "tailwindcss";
+
+@plugin '@tailwindcss/typography';
+
+@theme {
+  --font-sans:
+    Geist Sans, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-mono:
+    Geist Mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+
+  --color-catppuccin-base: #1e1e2e;
+  --color-catppuccin-mantle: #181825;
+  --color-catppuccin-crust: #11111b;
+  --color-catppuccin-lavender: #b4befe;
+  --color-catppuccin-text: #cdd6f4;
+}
+
+@layer utilities {
+  html {
+    overflow-y: auto;
+    color-scheme: dark;
+    scroll-padding-top: 100px;
+  }
+
+  html,
+  body {
+    @apply size-full;
+  }
+
+  body {
+    @apply font-sans antialiased;
+    @apply bg-catppuccin-mantle;
+    @apply text-white/75;
+  }
+
+  main {
+    @apply flex-1 py-32;
+  }
+
+  header {
+    @apply fixed top-0 right-0 left-0 z-50 py-6;
+    @apply bg-catppuccin-mantle/75;
+    @apply saturate-200 backdrop-blur-xs;
+  }
+
+  footer {
+    @apply py-6 text-sm;
+  }
+}
