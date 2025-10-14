@@ -1,0 +1,20 @@
+---
+import Container from "./Container.astro";
+
+const messages = [
+  "Screw unit testing. The vibes will carry us",
+  "I wonder which moron coded this blog. Oh it's me",
+  "Sorry there ain't no light mode chief",
+  "Catppuccin <3",
+  "Did the code pass the daily vibe check?",
+];
+---
+
+<header>
+  <Container>
+    <div class="text-center text-4xl font-semibold">Prple</div>
+    <p class="text-center text-sm text-white/50 italic select-none">
+      {messages[Math.floor(Math.random() * messages.length)]}
+    </p>
+  </Container>
+</header>
