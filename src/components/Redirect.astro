@@ -1,0 +1,22 @@
+---
+
+---
+
+<script>
+  const delaySeconds: number = 5;
+  const el = document.getElementById("redirect-count") as HTMLElement | null;
+  let t: number = delaySeconds;
+
+  if (el) el.textContent = String(t);
+
+  const iv = setInterval(() => {
+    t -= 1;
+    if (el) el.textContent = String(t);
+    if (t <= 0) {
+      clearInterval(iv);
+      location.replace("/");
+    }
+  }, 1000);
+
+  export {};
+</script>

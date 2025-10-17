@@ -1,5 +1,6 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import Layout from "@layouts/Layout.astro";
+import { SITE, HOME, SOCIALS } from "@const";
 ---
 
-<Layout title="Home" />
+<Layout title={HOME.TITLE} description={HOME.DESCRIPTION} />
