@@ -1,0 +1,30 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Redirect from "@components/Redirect.astro";
+import errorImage from "../assets/404image.png?url";
+---
+
+<Layout
+  title="404 Not Found"
+  description="The page you are looking for does not exist."
+>
+  <div>
+    <div class="container mx-auto px-4 py-16 text-center">
+      <h1 class="mb-4 text-5xl font-bold">404 - Page Not Found</h1>
+      <img
+        src={errorImage}
+        alt="404 Not Found"
+        class="mx-auto mb-8 max-w-2xl"
+      />
+      <Redirect />
+      <p class="mb-4 text-lg">
+        Oops! The page you're looking for doesn't exist. It might have been
+        moved or deleted.
+      </p>
+      <p id="redirect-msg" class="mb-4 text-sm text-white/70">
+        Redirecting to home in <span id="redirect-count">5</span> seconds…
+      </p>
+      <a href="/" class="text-blue-500 hover:underline"> Return to Home </a>
+    </div>
+  </div></Layout
+>

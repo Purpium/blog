@@ -1,27 +1,37 @@
 ---
-import Head from "../components/Head.astro";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
-const { title = "Astro" } = Astro.props;
+import Head from "@components/Head.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import { SITE } from "@const";
+
+type Props = {
+  title: string;
+  description: string;
+};
+
+const { title = "Default Title", description = "Default Description" } =
+  Astro.props;
 ---
 
 <html lang="en">
   <head>
-    <Head />
+    <Head title={`${title} | ${SITE.TITLE}`} description={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  </head>
-  <Header />
+    <meta name="description" content={description} />
+  </head><Header />
   <body class="flex min-h-screen flex-col">
-    <main class="flex-grow">
-      <slot />
+    <main class="flex flex-grow flex-col">
       <!-- page content will go here -->
+      <div>
+        <div class="container mx-auto px-4 py-20">
+          <slot />
+        </div>
+      </div>
     </main>
-
     <Footer />
-    <!-- your custom footer component -->
   </body>
 </html>

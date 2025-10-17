@@ -1,7 +1,41 @@
 ---
+import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
+
+const posts: CollectionEntry<"blog">[] = await getCollection("blog");
 ---
 
-<ul>
-  <li><a href="src/content/blog/01-test/index.mdx">Post 1</a></li>
-</ul>
+<Layout title="Blog" description="All posts">
+  <div class="container mx-auto px-4 text-center">
+    <ul class="space-y-3">
+      {
+        posts.map((post) => {
+          const source = (post as any).id ?? (post as any).filePath ?? "";
+          const parts = String(source).split("/").filter(Boolean);
+          const last = parts[parts.length - 1];
+          if (
+            last &&
+            (last === "index" ||
+              last.startsWith("index.") ||
+              last.endsWith(".md") ||
+              last.endsWith(".mdx"))
+          )
+            parts.pop();
+          const slug = parts.join("/");
+
+          return (
+            <li>
+              <a
+                class="text-blue-400 hover:underline"
+                href={`/blog/${slug ? slug + "/" : ""}`}
+              >
+                {post.data.title}
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </div>
+</Layout>
