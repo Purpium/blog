@@ -46,7 +46,10 @@ if (typeof (post as any).render === "function") {
 
 // Determine a publish date from common frontmatter keys and format it.
 const rawDate =
-  post.data?.date ?? post.data?.pubDate ?? post.data?.pubdate ?? null;
+  (post.data as any)?.date ??
+  (post.data as any)?.pubDate ??
+  (post.data as any)?.pubdate ??
+  null;
 const displayDate = rawDate ? new Date(rawDate).toLocaleDateString() : null;
 ---
 
