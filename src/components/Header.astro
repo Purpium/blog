@@ -1,25 +1,34 @@
 ---
 import Container from "@components/Container.astro";
-
-// Revise to terminal style animation later
-// Please put into another .astro file ok?
-// Maybe use typewriter effect library idk
-const messages = [
-  "Screw unit testing. The vibes will carry us!",
-  "I wonder which moron coded this blog. Oh it's me",
-  "Sorry there ain't no light mode chief",
-  "Catppuccin <3",
-  "Did the code pass the daily vibe check?",
-];
 ---
 
 <header>
   <Container>
     <div class="flex flex-col gap-y-4">
       <div class="text-center text-4xl font-semibold">Prple's blog</div>
-      <p class="text-center text-sm text-white/50 italic select-none">
-        {messages[Math.floor(Math.random() * messages.length)]}
+      <p
+        id="tagline"
+        class="text-center text-base text-white/50 italic select-none"
+      >
       </p>
+
+      <script>
+        import { typewriterEffect } from "../lib/utils";
+
+        const el = document.getElementById("tagline");
+        if (el) {
+          const stop = typewriterEffect(el, [
+            "Screw unit testing. The vibes will carry us.",
+            "Catppuccin <3",
+            "Did the code pass the daily vibe check?",
+            "I wonder which moron coded this blog. Oh it's me ↑.",
+            "Click the title for a surprise.",
+            "Maybe one day I'll fix the CSS layout...",
+          ]);
+
+          window.addEventListener("beforeunload", stop);
+        }
+      </script>
       <div class="flex flex-wrap items-center justify-center">
         <div class="group flex flex-col items-center gap-2">
           <a

@@ -49,4 +49,17 @@
   footer {
     @apply py-6 text-sm;
   }
+
+  .typewriter-cursor {
+    display: inline-block;
+    margin-left: 2px;
+    animation: blink 0.8s steps(1) infinite;
+    animation-play-state: running;
+  }
+
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
 }
