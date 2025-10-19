@@ -9,30 +9,50 @@ const posts: CollectionEntry<"blog">[] = await getCollection("blog");
 ---
 
 <Layout title={HOME.TITLE} description={HOME.DESCRIPTION}>
-  <div class="container mx-auto px-4 text-center">
-    <ul class="space-y-3">
+  <div class="mx-auto max-w-3xl px-6">
+    <h1 class="text-center text-2xl font-bold">Code & other shenanigans</h1>
+    <p class="mt-1 text-center text-neutral-400">
+      Welcome to my playground. Tech stuff and random thoughts live here.
+    </p>
+    <hr class="mt-4 mb-8 border-neutral-700" />
+    <ul class="space-y-8">
       {
         posts.map((post) => {
-          const source = (post as any).id ?? (post as any).filePath ?? "";
-          const parts = String(source).split("/").filter(Boolean);
-          const last = parts[parts.length - 1];
-          if (
-            last &&
-            (last === "index" ||
-              last.startsWith("index.") ||
-              last.endsWith(".md") ||
-              last.endsWith(".mdx"))
-          )
-            parts.pop();
-          const slug = parts.join("/");
+          const date = post.data.date
+            ? new Date(post.data.date).toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+              })
+            : null;
 
           return (
             <li>
               <a
-                class="text-blue-400 hover:underline"
-                href={`/blog/${slug ? slug + "/" : ""}`}
+                href={`/blog/${post.slug}/`}
+                class="group block rounded-lg transition-all duration-300"
               >
-                {post.data.title}
+                <h2 class="text-lg font-medium text-neutral-100">
+                  {post.data.title}
+                </h2>
+
+                <div class="mt-1 flex gap-3 text-sm text-neutral-500">
+                  {date && <span>{date}</span>}
+                  {post.data.readingTime && (
+                    <span>· {post.data.readingTime} min read</span>
+                  )}
+                </div>
+
+                {post.data.description && (
+                  <p class="mt-2 text-sm text-neutral-400">
+                    {post.data.description}
+                  </p>
+                )}
+
+                <div class="mt-3 flex translate-x-[-6px] items-center gap-1 text-sm text-blue-400 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+                  <span>Read</span>
+                  <span>→</span>
+                </div>
               </a>
             </li>
           );
