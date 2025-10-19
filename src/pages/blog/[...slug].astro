@@ -1,61 +1,31 @@
 ---
 import { getCollection } from "astro:content";
 
-// Generate paths for each post
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
-
-  return posts.map((post) => {
-    // Use id or filePath to build route parts (safe with Astro's CollectionEntry shape)
-    const source = (post as any).id ?? (post as any).filePath ?? "";
-    const parts = String(source).split("/").filter(Boolean);
-
-    // Remove common filename fragments (index, index.md, index.mdx, or direct md/mdx files)
-    const last = parts[parts.length - 1];
-    if (last) {
-      const low = String(last).toLowerCase();
-      if (
-        low === "index" ||
-        low.startsWith("index.") ||
-        low.endsWith(".md") ||
-        low.endsWith(".mdx")
-      ) {
-        parts.pop();
-      }
-    }
-
-    const slug = parts.join("/");
-
-    return {
-      params: { slug },
-      props: { post },
-    };
-  });
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
 }
 
 const { post } = Astro.props;
 
-// Render post content: some Astro versions expose `render()`, others add `rendered`.
-let Content: any = null;
-if (typeof (post as any).render === "function") {
-  const rendered = await (post as any).render();
-  Content = rendered?.Content ?? null;
-} else if ((post as any).rendered) {
-  Content = (post as any).rendered.Content ?? null;
-}
+// Render post content
+const { Content } = await post.render();
 
-// Determine a publish date from common frontmatter keys and format it.
-const rawDate =
-  (post.data as any)?.date ??
-  (post.data as any)?.pubDate ??
-  (post.data as any)?.pubdate ??
-  null;
-const displayDate = rawDate ? new Date(rawDate).toLocaleDateString() : null;
+// Optional date formatting
+const displayDate = post.data.date
+  ? new Date(post.data.date).toLocaleDateString()
+  : null;
 ---
 
 <html lang="en">
   <body>
     <article>
+      <!-- Put this for data and title whatever -->
+      <!-- <h1>{post.data.title}</h1>
+      {displayDate && <p>{displayDate}</p>} -->
       <Content />
     </article>
   </body>
